@@ -7,10 +7,12 @@
 
 import os
 import inspect
+import sys
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(os.path.dirname(currentdir))
 os.sys.path.insert(0, parentdir)
-
+cwd = os.getcwd()
+sys.path.append(cwd)
 import math
 import re
 import numpy as np
@@ -78,7 +80,11 @@ LOWER_NAME_PATTERN = re.compile(r"\w+_lower_\w+")
 TOE_NAME_PATTERN = re.compile(r"\w+_toe\d*")
 IMU_NAME_PATTERN = re.compile(r"imu\d*")
 
-URDF_FILENAME = "a1/a1.urdf"
+#URDF_FILENAME = "a1/a1.urdf"
+#robot = p.loadURDF(cwd + "/robot_model/atlas/atlas.urdf",
+#                       SimConfig.INITIAL_POS_WORLD_TO_BASEJOINT,
+#                       SimConfig.INITIAL_QUAT_WORLD_TO_BASEJOINT)
+URDF_FILENAME= cwd + "/a1sim/robots/atlas.urdf"
 
 _BODY_B_FIELD_NUMBER = 2
 _LINK_A_FIELD_NUMBER = 3
