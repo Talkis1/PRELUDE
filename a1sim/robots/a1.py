@@ -25,20 +25,56 @@ from a1sim.robots import robot_config
 from a1sim.envs import locomotion_gym_config
 
 NUM_MOTORS = 12
+# NUM_MOTORS = 6
 NUM_LEGS = 4
-MOTOR_NAMES = [
-    "FR_hip_joint",
-    "FR_upper_joint",
-    "FR_lower_joint",
-    "FL_hip_joint",
-    "FL_upper_joint",
-    "FL_lower_joint",
-    "RR_hip_joint",
-    "RR_upper_joint",
-    "RR_lower_joint",
-    "RL_hip_joint",
-    "RL_upper_joint",
-    "RL_lower_joint",
+# MOTOR_NAMES = [
+#     "FR_hip_joint",
+#     "FR_upper_joint",
+#     "FR_lower_joint",
+#     "FL_hip_joint",
+#     "FL_upper_joint",
+#     "FL_lower_joint",
+#     "RR_hip_joint",
+#     "RR_upper_joint",
+#     "RR_lower_joint",
+#     "RL_hip_joint",
+#     "RL_upper_joint",
+#     "RL_lower_joint",
+# ]
+MOTOR_NAMES=[
+  "back_bkx",
+  "back_bky",
+  "back_bkz",
+  "pelvis_com_fixed",
+  "l_arm_elx",
+  "l_arm_ely",
+  "l_arm_shx",
+  "l_arm_shz",
+  "l_arm_wrx",
+  "l_arm_wry",
+  "l_arm_wry2",
+  "l_leg_akx",
+  "l_leg_aky",
+  "l_sole_fixed",
+  "l_leg_hpx",
+  "l_leg_hpy",
+  "l_leg_hpz",
+  "l_leg_kny",
+  "neck_ry",
+  "r_arm_elx",
+  "r_arm_ely",
+  "r_arm_shx",
+  "r_arm_shz",
+  "r_arm_wrx",
+  "r_arm_wry",
+  "r_arm_wry2",
+  "r_leg_akx",
+  "r_leg_aky",
+  "r_sole_fixed",
+  "r_leg_hpx",
+  "r_leg_hpy",
+  "r_leg_hpz",
+  "r_leg_kny"
 ]
 INIT_RACK_POSITION = [0, 0, 1]
 INIT_POSITION = [0, 0, 0.26]
