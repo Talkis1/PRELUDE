@@ -14,7 +14,8 @@ import numpy as np
 
 from a1sim.robots import robot_config
 
-NUM_MOTORS = 12
+# NUM_MOTORS = 12
+NUM_MOTORS=33
 
 MOTOR_COMMAND_DIMENSION = 5
 

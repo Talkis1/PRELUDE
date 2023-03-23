@@ -24,8 +24,8 @@ from a1sim.robots import minitaur
 from a1sim.robots import robot_config
 from a1sim.envs import locomotion_gym_config
 
-NUM_MOTORS = 12
-# NUM_MOTORS = 6
+NUM_MOTORS = 33
+# NUM_MOTORS = 12
 NUM_LEGS = 4
 # MOTOR_NAMES = [
 #     "FR_hip_joint",
@@ -110,7 +110,13 @@ KNEE_D_GAIN = 2.0
 # Bases on the readings from Laikago's default pose.
 INIT_MOTOR_ANGLES = np.array([0, 0.9, -1.8] * NUM_LEGS)
 
-HIP_NAME_PATTERN = re.compile(r"\w+_hip_\w+")
+# HIP_NAME_PATTERN = re.compile(r"\w+_hip_\w+")
+# UPPER_NAME_PATTERN = re.compile(r"\w+_upper_\w+")
+# LOWER_NAME_PATTERN = re.compile(r"\w+_lower_\w+")
+# TOE_NAME_PATTERN = re.compile(r"\w+_toe\d*")
+# IMU_NAME_PATTERN = re.compile(r"imu\d*")
+BACK_NAME_PATTERN = re.compile(r"back_\w+")
+HIP_NAME_PATTERN = re.compile(r"\w+_leg_h\w+")
 UPPER_NAME_PATTERN = re.compile(r"\w+_upper_\w+")
 LOWER_NAME_PATTERN = re.compile(r"\w+_lower_\w+")
 TOE_NAME_PATTERN = re.compile(r"\w+_toe\d*")
@@ -120,8 +126,12 @@ IMU_NAME_PATTERN = re.compile(r"imu\d*")
 #robot = p.loadURDF(cwd + "/robot_model/atlas/atlas.urdf",
 #                       SimConfig.INITIAL_POS_WORLD_TO_BASEJOINT,
 #                       SimConfig.INITIAL_QUAT_WORLD_TO_BASEJOINT)
-URDF_FILENAME= cwd + "/a1sim/robots/atlas.urdf"
-
+URDF_FILENAME= cwd + "/a1sim/robots/atlas/atlas.urdf"
+#pyb.connect(pyb.GUI)
+#urdf1=pyb.loadURDF("humanoid/humanoid.urdf")
+#urdf1=pyb.loadURDF(cwd + "/a1sim/robots/atlas.urdf")
+#print(pyb.getNumJoints(urdf1))
+#URDF_FILENAME="humanoid/humanoid.urdf"
 _BODY_B_FIELD_NUMBER = 2
 _LINK_A_FIELD_NUMBER = 3
 
@@ -317,10 +327,13 @@ class A1(minitaur.Minitaur):
           self._GetDefaultInitPosition(),
           self._GetDefaultInitOrientation(),
           flags=self._pybullet_client.URDF_USE_SELF_COLLISION)
+      print('printed from if statement is working Tristan')
     else:
       self.quadruped = self._pybullet_client.loadURDF(
           a1_urdf_path, self._GetDefaultInitPosition(),
           self._GetDefaultInitOrientation())
+      print('+++++++++\nprinted from else statement is working Tristan',
+            pyb.getNumJoints(self.quadruped))
 
   def _SettleDownForReset(self, default_motor_angles, reset_time):
     self.ReceiveObservation()
@@ -444,11 +457,14 @@ class A1(minitaur.Minitaur):
     self._lower_link_ids = []
     self._foot_link_ids = []
     self._imu_link_ids = []
+    self._back_link_ids = []
 
     for i in range(num_joints):
       joint_info = self.pybullet_client.getJointInfo(self.quadruped, i)
+      
       joint_name = joint_info[1].decode("UTF-8")
       joint_id = self._joint_name_to_id[joint_name]
+      print(HIP_NAME_PATTERN,'++++++++++\n',joint_name)
       if HIP_NAME_PATTERN.match(joint_name):
         self._hip_link_ids.append(joint_id)
       elif UPPER_NAME_PATTERN.match(joint_name):
@@ -462,6 +478,8 @@ class A1(minitaur.Minitaur):
         self._foot_link_ids.append(joint_id)
       elif IMU_NAME_PATTERN.match(joint_name):
         self._imu_link_ids.append(joint_id)
+      elif BACK_NAME_PATTERN.match(joint_name):
+        self._back_link_ids.append(joint_id)
       else:
         raise ValueError("Unknown category of joint %s" % joint_name)
 
@@ -474,6 +492,7 @@ class A1(minitaur.Minitaur):
     self._lower_link_ids.sort()
     self._foot_link_ids.sort()
     self._leg_link_ids.sort()
+    self._back_link_ids.sort()
 
   def _GetMotorNames(self):
     return MOTOR_NAMES

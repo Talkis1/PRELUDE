@@ -8,6 +8,11 @@ import argparse
 import pickle
 import yaml
 import torch
+import pybullet as pyb
+import sys
+cwd = os.getcwd()
+sys.path.append(cwd)
+
 
 from gait.agent import build_agent
 from nav.environments import build_robot_env
@@ -129,5 +134,9 @@ if __name__ == '__main__':
     nav_policy = args.nav_policy
     gait_policy = args.gait_policy
     difficulty = args.difficulty
+    # pyb.connect(pyb.GUI)
+    # urdf1=pyb.loadURDF("humanoid/humanoid.urdf")
+    #urdf1=pyb.loadURDF(cwd + "/a1sim/robots/atlas.urdf")
+    #print(pyb.getNumJoints(urdf1))
 
     evaluate(nav_policy, gait_policy, difficulty)
