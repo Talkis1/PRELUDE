@@ -117,6 +117,17 @@ INIT_MOTOR_ANGLES = np.array([0, 0.9, -1.8] * NUM_LEGS)
 # IMU_NAME_PATTERN = re.compile(r"imu\d*")
 BACK_NAME_PATTERN = re.compile(r"back_\w+")
 HIP_NAME_PATTERN = re.compile(r"\w+_leg_h\w+")
+KNEE_NAME_PATTERN = re.compile(r"\w+_leg_kn\w+")
+ANKLE_NAME_PATTERN = re.compile(r"\w+ak\w+")
+FOOT_NAME_PATTERN = re.compile(r"\w+sole\w+")
+
+SHOULDER_NAME_PATTERN = re.compile(r"\w+_arm_sh\w+")
+ELBOW_NAME_PATTERN = re.compile(r"\w+_arm_el\w+")
+WRIST_NAME_PATTERN = re.compile(r"\w+wr\w+")
+
+NECK_NAME_PATTERN = re.compile(r"neck\w+")
+PELVIS_NAME_PATTERN = re.compile(r"pelvis\w+")
+
 UPPER_NAME_PATTERN = re.compile(r"\w+_upper_\w+")
 LOWER_NAME_PATTERN = re.compile(r"\w+_lower_\w+")
 TOE_NAME_PATTERN = re.compile(r"\w+_toe\d*")
@@ -327,13 +338,10 @@ class A1(minitaur.Minitaur):
           self._GetDefaultInitPosition(),
           self._GetDefaultInitOrientation(),
           flags=self._pybullet_client.URDF_USE_SELF_COLLISION)
-      print('printed from if statement is working Tristan')
     else:
       self.quadruped = self._pybullet_client.loadURDF(
           a1_urdf_path, self._GetDefaultInitPosition(),
           self._GetDefaultInitOrientation())
-      print('+++++++++\nprinted from else statement is working Tristan',
-            pyb.getNumJoints(self.quadruped))
 
   def _SettleDownForReset(self, default_motor_angles, reset_time):
     self.ReceiveObservation()
@@ -427,11 +435,26 @@ class A1(minitaur.Minitaur):
           targetVelocity=0,
           force=0)
     for name, i in zip(MOTOR_NAMES, range(len(MOTOR_NAMES))):
-      if "hip_joint" in name:
+      #hp=hip, kn=knee, ak=ankle, bk=back, sh=shoulder, el=elbow, wr=wrist
+      if "hp" in name:
         angle = INIT_MOTOR_ANGLES[i] + HIP_JOINT_OFFSET
-      elif "upper_joint" in name:
+      elif "kn" in name:
         angle = INIT_MOTOR_ANGLES[i] + UPPER_LEG_JOINT_OFFSET
-      elif "lower_joint" in name:
+      elif "ak" in name:
+        angle = INIT_MOTOR_ANGLES[i] + KNEE_JOINT_OFFSET
+      elif "bk" in name:
+        angle = INIT_MOTOR_ANGLES[i] + KNEE_JOINT_OFFSET
+      elif "sh" in name:
+        angle = INIT_MOTOR_ANGLES[i] + KNEE_JOINT_OFFSET
+      elif "el" in name:
+        angle = INIT_MOTOR_ANGLES[i] + KNEE_JOINT_OFFSET
+      elif "wr" in name:
+        angle = INIT_MOTOR_ANGLES[i] + KNEE_JOINT_OFFSET
+      elif "pelvis" in name:
+        angle = INIT_MOTOR_ANGLES[i] + KNEE_JOINT_OFFSET
+      elif "neck" in name:
+        angle = INIT_MOTOR_ANGLES[i] + KNEE_JOINT_OFFSET
+      elif "sole" in name:
         angle = INIT_MOTOR_ANGLES[i] + KNEE_JOINT_OFFSET
       else:
         raise ValueError("The name %s is not recognized as a motor joint." %
@@ -452,6 +475,16 @@ class A1(minitaur.Minitaur):
     """
     num_joints = self.pybullet_client.getNumJoints(self.quadruped)
     self._hip_link_ids = [-1]
+    self._back_link_ids = []
+    self._knee_link_ids = []
+    self._ankle_link_ids = []
+    self._foot_link_ids = []
+    self._shoulder_link_ids = []
+    self._elbow_link_ids = []
+    self._wrist_link_ids = []
+    self._neck_link_ids = []
+    self._pelvis_link_ids = []
+    
     self._leg_link_ids = []
     self._motor_link_ids = []
     self._lower_link_ids = []
@@ -464,11 +497,27 @@ class A1(minitaur.Minitaur):
       
       joint_name = joint_info[1].decode("UTF-8")
       joint_id = self._joint_name_to_id[joint_name]
-      print(HIP_NAME_PATTERN,'++++++++++\n',joint_name)
+      print(i,'++++++++++\n',joint_name)
       if HIP_NAME_PATTERN.match(joint_name):
         self._hip_link_ids.append(joint_id)
-      elif UPPER_NAME_PATTERN.match(joint_name):
-        self._motor_link_ids.append(joint_id)
+      elif KNEE_NAME_PATTERN.match(joint_name):
+        self._knee_link_ids.append(joint_id)
+      elif ANKLE_NAME_PATTERN.match(joint_name):
+        self._ankle_link_ids.append(joint_id)
+      elif FOOT_NAME_PATTERN.match(joint_name):
+        self._foot_link_ids.append(joint_id)
+      elif SHOULDER_NAME_PATTERN.match(joint_name):
+        self._shoulder_link_ids.append(joint_id)
+      elif ELBOW_NAME_PATTERN.match(joint_name):
+        self._elbow_link_ids.append(joint_id)
+      elif WRIST_NAME_PATTERN.match(joint_name):
+        self._wrist_link_ids.append(joint_id)
+      elif NECK_NAME_PATTERN.match(joint_name):
+        self._neck_link_ids.append(joint_id)
+      elif PELVIS_NAME_PATTERN.match(joint_name):
+        self._pelvis_link_ids.append(joint_id)
+      elif BACK_NAME_PATTERN.match(joint_name):
+        self._back_link_ids.append(joint_id)
       # We either treat the lower leg or the toe as the foot link, depending on
       # the urdf version used.
       elif LOWER_NAME_PATTERN.match(joint_name):
@@ -478,8 +527,7 @@ class A1(minitaur.Minitaur):
         self._foot_link_ids.append(joint_id)
       elif IMU_NAME_PATTERN.match(joint_name):
         self._imu_link_ids.append(joint_id)
-      elif BACK_NAME_PATTERN.match(joint_name):
-        self._back_link_ids.append(joint_id)
+
       else:
         raise ValueError("Unknown category of joint %s" % joint_name)
 
