@@ -26,7 +26,7 @@ def build_agent(load_path, device=None):
     # configuration
     policy_path = load_path + "/policy"
     config_path = load_path + "/config"
-
+    
     exp_config = yaml.load(open("{}/{}".format(config_path, SUBPATH_CONFIG["experiment"]), 'r'), Loader=yaml.FullLoader)
     ppo_config = yaml.load(open("{}/{}".format(config_path, SUBPATH_CONFIG["ppo"]), 'r'), Loader=yaml.FullLoader)
     sim_config = yaml.load(open("{}/{}".format(config_path, SUBPATH_CONFIG["simulation"]), 'r'), Loader=yaml.FullLoader)

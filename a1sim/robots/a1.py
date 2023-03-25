@@ -108,7 +108,7 @@ KNEE_P_GAIN = 80.0
 KNEE_D_GAIN = 2.0
 
 # Bases on the readings from Laikago's default pose.
-INIT_MOTOR_ANGLES = np.array([0, 0.9, -1.8] * NUM_LEGS)
+INIT_MOTOR_ANGLES = np.array([0, 0.9, -1.8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0,0] * NUM_LEGS)
 
 # HIP_NAME_PATTERN = re.compile(r"\w+_hip_\w+")
 # UPPER_NAME_PATTERN = re.compile(r"\w+_upper_\w+")
@@ -137,7 +137,7 @@ IMU_NAME_PATTERN = re.compile(r"imu\d*")
 #robot = p.loadURDF(cwd + "/robot_model/atlas/atlas.urdf",
 #                       SimConfig.INITIAL_POS_WORLD_TO_BASEJOINT,
 #                       SimConfig.INITIAL_QUAT_WORLD_TO_BASEJOINT)
-URDF_FILENAME= cwd + "/a1sim/robots/atlas/atlas.urdf"
+URDF_FILENAME= cwd + "/a1sim/robots/atlas.urdf"
 #pyb.connect(pyb.GUI)
 #urdf1=pyb.loadURDF("humanoid/humanoid.urdf")
 #urdf1=pyb.loadURDF(cwd + "/a1sim/robots/atlas.urdf")
@@ -436,6 +436,7 @@ class A1(minitaur.Minitaur):
           force=0)
     for name, i in zip(MOTOR_NAMES, range(len(MOTOR_NAMES))):
       #hp=hip, kn=knee, ak=ankle, bk=back, sh=shoulder, el=elbow, wr=wrist
+      print(i)
       if "hp" in name:
         angle = INIT_MOTOR_ANGLES[i] + HIP_JOINT_OFFSET
       elif "kn" in name:

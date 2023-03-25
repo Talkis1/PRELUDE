@@ -46,9 +46,9 @@ _LEG_NAME_PATTERN1 = re.compile(r"hip\D*joint")
 _LEG_NAME_PATTERN2 = re.compile(r"hip\D*link")
 _LEG_NAME_PATTERN3 = re.compile(r"motor\D*link")
 SENSOR_NOISE_STDDEV = (0.0, 0.0, 0.0, 0.0, 0.0)
-MINITAUR_DEFAULT_MOTOR_DIRECTIONS = (-1, -1, -1, -1, 1, 1, 1, 1)
-MINITAUR_DEFAULT_MOTOR_OFFSETS = (0, 0, 0, 0, 0, 0, 0, 0)
-MINITAUR_NUM_MOTORS = 8
+MINITAUR_DEFAULT_MOTOR_DIRECTIONS = (-1, -1, -1, -1, 1, 1, 1, 1,-1, -1, -1, -1, 1, 1, 1, 1,-1, -1, -1, -1, 1, 1, 1, 1,-1, -1, -1, -1, 1, 1, 1, 1,1)
+MINITAUR_DEFAULT_MOTOR_OFFSETS = (0, 0, 0, 0, 0, 0, 0, 0,0, 0, 0, 0, 0, 0, 0, 0,0, 0, 0, 0, 0, 0, 0, 0,0, 0, 0, 0, 0, 0, 0, 0,0)
+MINITAUR_NUM_MOTORS = 33 #8
 TWO_PI = 2 * math.pi
 MINITAUR_DOFS_PER_LEG = 2
 
@@ -510,7 +510,7 @@ class Minitaur(object):
                                    desired_angle)
 
   def GetURDFFile(self):
-    return "quadruped/minitaur.urdf"
+    return "atlas.urdf" #"quadruped/minitaur.urdf"
 
   def ResetPose(self, add_constraint):
     """Reset the pose of the minitaur.
