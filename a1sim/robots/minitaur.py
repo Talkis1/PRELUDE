@@ -780,7 +780,7 @@ class Minitaur(object):
       Motor angles, mapped to [-pi, pi].
     """
     motor_angles = [state[0] for state in self._joint_states]
-    print('\n==================================\n',motor_angles,'\n==================================\n', self._motor_offset,'\n==================================\n',self._motor_direction)
+    #print('\n==================================\n',motor_angles,'\n==================================\n', self._motor_offset,'\n==================================\n',self._motor_direction)
     motor_angles = np.multiply(
         np.asarray(motor_angles) - np.asarray(self._motor_offset),
         self._motor_direction)

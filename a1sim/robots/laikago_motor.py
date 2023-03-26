@@ -158,7 +158,6 @@ class LaikagoMotorModel(object):
     else:
       print("Undefined motor_control_mode=",motor_control_mode)
       exit()
-    print('\n==================================\n', kp,kd)
     motor_torques = -1 * (kp * (motor_angle - desired_motor_angles)) - kd * (
       motor_velocity - desired_motor_velocities) + additional_torques
     motor_torques = self._strength_ratios * motor_torques

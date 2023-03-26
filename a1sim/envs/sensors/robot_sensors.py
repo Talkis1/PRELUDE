@@ -115,8 +115,10 @@ class MotorAngleAccSensor(sensor.BoxSpaceSensor):
     self.normal = normal
     self.first_time = True
     self.noise = noise
-    self._mean = np.array([0,0.9,-1.8]*4+[0]*12)
-    self._std = np.array([0.1]*12+[1]*12)
+    #self._mean = np.array([0,0.9,-1.8]*4+[0]*12)
+    #self._std = np.array([0.1]*12+[1]*12)
+    self._mean = np.array([0]*66)
+    self._std = np.array([0.1]*33+[1]*33)
     self.dt = dt
     if observe_sine_cosine:
       super(MotorAngleAccSensor, self).__init__(
@@ -147,7 +149,7 @@ class MotorAngleAccSensor(sensor.BoxSpaceSensor):
       motor_angles += np.random.normal(0,1e-2,size=self._num_motors)
       motor_acc += np.random.normal(0,0.5,size=self._num_motors)
     self.last_angle = motor_angles
-    # print(motor_acc)
+    
     if self._observe_sine_cosine:
       return np.hstack((np.cos(motor_angles), np.sin(motor_angles)))
     else:
