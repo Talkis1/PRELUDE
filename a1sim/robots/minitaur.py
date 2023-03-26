@@ -33,10 +33,43 @@ OVERHEAT_SHUTDOWN_TORQUE = 2.45
 OVERHEAT_SHUTDOWN_TIME = 1.0
 LEG_POSITION = ["front_left", "back_left", "front_right", "back_right"]
 MOTOR_NAMES = [
-    "motor_front_leftL_joint", "motor_front_leftR_joint",
-    "motor_back_leftL_joint", "motor_back_leftR_joint",
-    "motor_front_rightL_joint", "motor_front_rightR_joint",
-    "motor_back_rightL_joint", "motor_back_rightR_joint"
+  #  "motor_front_leftL_joint", "motor_front_leftR_joint",
+  #  "motor_back_leftL_joint", "motor_back_leftR_joint",
+  #  "motor_front_rightL_joint", "motor_front_rightR_joint",
+  #  "motor_back_rightL_joint", "motor_back_rightR_joint"
+  "back_bkx",
+  "back_bky",
+  "back_bkz",
+  "pelvis_com_fixed",
+  "l_arm_elx",
+  "l_arm_ely",
+  "l_arm_shx",
+  "l_arm_shz",
+  "l_arm_wrx",
+  "l_arm_wry",
+  "l_arm_wry2",
+  "l_leg_akx",
+  "l_leg_aky",
+  "l_sole_fixed",
+  "l_leg_hpx",
+  "l_leg_hpy",
+  "l_leg_hpz",
+  "l_leg_kny",
+  "neck_ry",
+  "r_arm_elx",
+  "r_arm_ely",
+  "r_arm_shx",
+  "r_arm_shz",
+  "r_arm_wrx",
+  "r_arm_wry",
+  "r_arm_wry2",
+  "r_leg_akx",
+  "r_leg_aky",
+  "r_sole_fixed",
+  "r_leg_hpx",
+  "r_leg_hpy",
+  "r_leg_hpz",
+  "r_leg_kny"
 ]
 _CHASSIS_NAME_PATTERN = re.compile(r"chassis\D*center")
 _MOTOR_NAME_PATTERN = re.compile(r"motor\D*joint")
@@ -747,6 +780,7 @@ class Minitaur(object):
       Motor angles, mapped to [-pi, pi].
     """
     motor_angles = [state[0] for state in self._joint_states]
+    print('\n==================================\n',motor_angles,'\n==================================\n', self._motor_offset,'\n==================================\n',self._motor_direction)
     motor_angles = np.multiply(
         np.asarray(motor_angles) - np.asarray(self._motor_offset),
         self._motor_direction)

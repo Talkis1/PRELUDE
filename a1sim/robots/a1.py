@@ -78,13 +78,16 @@ MOTOR_NAMES=[
 ]
 INIT_RACK_POSITION = [0, 0, 1]
 INIT_POSITION = [0, 0, 0.26]
-JOINT_DIRECTIONS = np.ones(12)
+JOINT_DIRECTIONS = np.ones(33)
 HIP_JOINT_OFFSET = 0.0
 UPPER_LEG_JOINT_OFFSET = 0.0
 KNEE_JOINT_OFFSET = 0.0
 DOFS_PER_LEG = 3
-JOINT_OFFSETS = np.array(
-    [HIP_JOINT_OFFSET, UPPER_LEG_JOINT_OFFSET, KNEE_JOINT_OFFSET] * 4)
+JOINT_OFFSETS = np.array([0]*33)
+
+
+#np.array(
+    #[HIP_JOINT_OFFSET, UPPER_LEG_JOINT_OFFSET, KNEE_JOINT_OFFSET] * 4)
 PI = math.pi
 
 MAX_MOTOR_ANGLE_CHANGE_PER_STEP = 0.2
@@ -108,7 +111,7 @@ KNEE_P_GAIN = 80.0
 KNEE_D_GAIN = 2.0
 
 # Bases on the readings from Laikago's default pose.
-INIT_MOTOR_ANGLES = np.array([0, 0.9, -1.8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0,0] * NUM_LEGS)
+INIT_MOTOR_ANGLES = np.array([0] * 33)
 
 # HIP_NAME_PATTERN = re.compile(r"\w+_hip_\w+")
 # UPPER_NAME_PATTERN = re.compile(r"\w+_upper_\w+")

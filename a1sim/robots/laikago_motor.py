@@ -39,14 +39,15 @@ class LaikagoMotorModel(object):
     torque).
 
   """
-
   def __init__(self,
                kp=60,
                kd=1,
                torque_limits=33.5,
                motor_control_mode=robot_config.MotorControlMode.POSITION):
-    self._kp = kp
-    self._kd = kd
+    #self._kp = kp
+    #self._kd = kd
+    self._kp = 1
+    self._kd = 1
     self._torque_limits = torque_limits
     if torque_limits is not None:
       if isinstance(torque_limits, (collections.Sequence, np.ndarray)):
@@ -137,14 +138,17 @@ class LaikagoMotorModel(object):
       if len(motor_commands) != NUM_MOTORS:
         motor_commands = motor_commands[0]
       assert len(motor_commands) == NUM_MOTORS
+      print('/////////////////////////',1,'///////////////////////')
       kp = self._kp
       kd = self._kd
       desired_motor_angles = motor_commands
       desired_motor_velocities = np.full(NUM_MOTORS, 0)
     elif motor_control_mode is robot_config.MotorControlMode.HYBRID:
       # The input should be a 60 dimension vector
+      print('/////////////////////////',2,'///////////////////////')
+      print("Undefined motor_control_mode=",motor_control_mode)
       assert len(motor_commands) == MOTOR_COMMAND_DIMENSION * NUM_MOTORS
-      kp = motor_commands[POSITION_GAIN_INDEX::MOTOR_COMMAND_DIMENSION]
+      kp = motor_commands[POSITION_GAIN_INDEX::MOTOR_COMMAND_DIMENSION]    
       kd = motor_commands[VELOCITY_GAIN_INDEX::MOTOR_COMMAND_DIMENSION]
       desired_motor_angles = motor_commands[
           POSITION_INDEX::MOTOR_COMMAND_DIMENSION]
@@ -154,8 +158,9 @@ class LaikagoMotorModel(object):
     else:
       print("Undefined motor_control_mode=",motor_control_mode)
       exit()
+    print('\n==================================\n', kp,kd)
     motor_torques = -1 * (kp * (motor_angle - desired_motor_angles)) - kd * (
-        motor_velocity - desired_motor_velocities) + additional_torques
+      motor_velocity - desired_motor_velocities) + additional_torques
     motor_torques = self._strength_ratios * motor_torques
     # print('hh',motor_torques)
     # print(self._torque_limits)
