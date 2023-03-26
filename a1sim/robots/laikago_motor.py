@@ -138,14 +138,14 @@ class LaikagoMotorModel(object):
       if len(motor_commands) != NUM_MOTORS:
         motor_commands = motor_commands[0]
       assert len(motor_commands) == NUM_MOTORS
-      print('/////////////////////////',1,'///////////////////////')
+      
       kp = self._kp
       kd = self._kd
       desired_motor_angles = motor_commands
       desired_motor_velocities = np.full(NUM_MOTORS, 0)
     elif motor_control_mode is robot_config.MotorControlMode.HYBRID:
       # The input should be a 60 dimension vector
-      print('/////////////////////////',2,'///////////////////////')
+
       print("Undefined motor_control_mode=",motor_control_mode)
       assert len(motor_commands) == MOTOR_COMMAND_DIMENSION * NUM_MOTORS
       kp = motor_commands[POSITION_GAIN_INDEX::MOTOR_COMMAND_DIMENSION]    

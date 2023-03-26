@@ -439,7 +439,7 @@ class A1(minitaur.Minitaur):
           force=0)
     for name, i in zip(MOTOR_NAMES, range(len(MOTOR_NAMES))):
       #hp=hip, kn=knee, ak=ankle, bk=back, sh=shoulder, el=elbow, wr=wrist
-      print(i)
+      
       if "hp" in name:
         angle = INIT_MOTOR_ANGLES[i] + HIP_JOINT_OFFSET
       elif "kn" in name:
@@ -501,7 +501,7 @@ class A1(minitaur.Minitaur):
       
       joint_name = joint_info[1].decode("UTF-8")
       joint_id = self._joint_name_to_id[joint_name]
-      print(i,'++++++++++\n',joint_name)
+      
       if HIP_NAME_PATTERN.match(joint_name):
         self._hip_link_ids.append(joint_id)
       elif KNEE_NAME_PATTERN.match(joint_name):
