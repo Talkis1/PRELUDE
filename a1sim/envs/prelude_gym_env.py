@@ -62,20 +62,21 @@ class SimulationWrapper(gym.Wrapper):
             dic_name_to_id[jointInfo[1].decode('UTF-8')] = jointInfo[0]
 
         ## Overwrite Google's colors
-        self.pybullet_client.changeVisualShape(self.robot.quadruped, dic_name_to_id['FR_hip_fixed'], rgbaColor=(0.2, 0.3, 0.3, 1.0))
-        self.pybullet_client.changeVisualShape(self.robot.quadruped, dic_name_to_id['FL_hip_fixed'], rgbaColor=(0.2, 0.3, 0.3, 1.0))
-        self.pybullet_client.changeVisualShape(self.robot.quadruped, dic_name_to_id['RR_hip_fixed'], rgbaColor=(0.2, 0.3, 0.3, 1.0))
-        self.pybullet_client.changeVisualShape(self.robot.quadruped, dic_name_to_id['RL_hip_fixed'], rgbaColor=(0.2, 0.3, 0.3, 1.0))
 
-        self.pybullet_client.changeVisualShape(self.robot.quadruped, dic_name_to_id['FR_upper_joint'], rgbaColor=(0.8, 0.4, 0.0, 1.0))
-        self.pybullet_client.changeVisualShape(self.robot.quadruped, dic_name_to_id['FL_upper_joint'], rgbaColor=(0.8, 0.4, 0.0, 1.0))
-        self.pybullet_client.changeVisualShape(self.robot.quadruped, dic_name_to_id['RR_upper_joint'], rgbaColor=(0.8, 0.4, 0.0, 1.0))
-        self.pybullet_client.changeVisualShape(self.robot.quadruped, dic_name_to_id['RL_upper_joint'], rgbaColor=(0.8, 0.4, 0.0, 1.0))
+        # self.pybullet_client.changeVisualShape(self.robot.quadruped, dic_name_to_id['FR_hip_fixed'], rgbaColor=(0.2, 0.3, 0.3, 1.0))
+        # self.pybullet_client.changeVisualShape(self.robot.quadruped, dic_name_to_id['FL_hip_fixed'], rgbaColor=(0.2, 0.3, 0.3, 1.0))
+        # self.pybullet_client.changeVisualShape(self.robot.quadruped, dic_name_to_id['RR_hip_fixed'], rgbaColor=(0.2, 0.3, 0.3, 1.0))
+        # self.pybullet_client.changeVisualShape(self.robot.quadruped, dic_name_to_id['RL_hip_fixed'], rgbaColor=(0.2, 0.3, 0.3, 1.0))
 
-        self.pybullet_client.changeVisualShape(self.robot.quadruped, dic_name_to_id['FR_hip_joint'], rgbaColor=(1.0, 1.0, 1.0, 1.0))
-        self.pybullet_client.changeVisualShape(self.robot.quadruped, dic_name_to_id['FL_hip_joint'], rgbaColor=(1.0, 1.0, 1.0, 1.0))
-        self.pybullet_client.changeVisualShape(self.robot.quadruped, dic_name_to_id['RR_hip_joint'], rgbaColor=(1.0, 1.0, 1.0, 1.0))
-        self.pybullet_client.changeVisualShape(self.robot.quadruped, dic_name_to_id['RL_hip_joint'], rgbaColor=(1.0, 1.0, 1.0, 1.0))
+        # self.pybullet_client.changeVisualShape(self.robot.quadruped, dic_name_to_id['FR_upper_joint'], rgbaColor=(0.8, 0.4, 0.0, 1.0))
+        # self.pybullet_client.changeVisualShape(self.robot.quadruped, dic_name_to_id['FL_upper_joint'], rgbaColor=(0.8, 0.4, 0.0, 1.0))
+        # self.pybullet_client.changeVisualShape(self.robot.quadruped, dic_name_to_id['RR_upper_joint'], rgbaColor=(0.8, 0.4, 0.0, 1.0))
+        # self.pybullet_client.changeVisualShape(self.robot.quadruped, dic_name_to_id['RL_upper_joint'], rgbaColor=(0.8, 0.4, 0.0, 1.0))
+
+        # self.pybullet_client.changeVisualShape(self.robot.quadruped, dic_name_to_id['FR_hip_joint'], rgbaColor=(1.0, 1.0, 1.0, 1.0))
+        # self.pybullet_client.changeVisualShape(self.robot.quadruped, dic_name_to_id['FL_hip_joint'], rgbaColor=(1.0, 1.0, 1.0, 1.0))
+        # self.pybullet_client.changeVisualShape(self.robot.quadruped, dic_name_to_id['RR_hip_joint'], rgbaColor=(1.0, 1.0, 1.0, 1.0))
+        # self.pybullet_client.changeVisualShape(self.robot.quadruped, dic_name_to_id['RL_hip_joint'], rgbaColor=(1.0, 1.0, 1.0, 1.0))
 
         if self.load_terrain !=None:
             # self.pybullet_client.removeBody(self.env.get_ground())
@@ -423,13 +424,16 @@ class DynamicsWrapper(gym.Wrapper):
         ratio_param = {}
         if "random_dynamics" in self.random_param.keys() and self.random_param["random_dynamics"]:
             ratio_param['control_latency'] = np.random.uniform(low=0.0, high=2.0, size=1)
-            ratio_param['joint_friction'] = np.random.uniform(low=0.0, high=2.0, size=12)
+            ratio_param['joint_friction'] = np.random.uniform(low=0.0, high=2.0, size=33)
             ratio_param['spin_foot_friction'] = np.random.uniform(low=0.0, high=2.0, size=1)
             ratio_param['foot_friction'] = np.random.uniform(0.5, 1.5, size=1)
             ratio_param['base_mass'] = np.random.uniform(0.8, 1.2, size=1)
             ratio_param['base_inertia'] = np.random.uniform(0.8, 1.2, size=3)
-            ratio_param['leg_mass'] = np.random.uniform(0.8, 1.2, size=3)
-            ratio_param['leg_inertia'] = [np.random.uniform(0.8, 1.2, size=3) for _ in range(4)]
+            ratio_param['leg_mass'] = np.random.uniform(0.8, 1.2, size=2)
+            ratio_param['leg_inertia'] = [np.random.uniform(0.8, 1.2, size=1) for _ in range(2)]
+            ratio_param['back_mass'] = [np.random.uniform(0.8, 1.2, size=3)]
+            ratio_param['back_inertia'] = [np.random.uniform(0.8, 1.2, size=3)]
+
         else:
             for key in ['control_latency', 'spin_foot_friction', 'foot_friction', 'base_mass']:
                 ratio_param[key] = 1
@@ -478,20 +482,28 @@ class DynamicsWrapper(gym.Wrapper):
         info['dynamics']['base_inertia'] = base_inertia
 
         if 'leg_mass' in self.dynamic_param.keys():
-            leg_mass = np.tile(ratio_param['leg_mass'], 4) * self.dynamic_param['leg_mass']
+            leg_mass = np.tile(ratio_param['leg_mass']) * self.dynamic_param['leg_mass']
         else:
-            leg_mass = np.tile(ratio_param['leg_mass'], 4) * self.robot.GetLegMassesFromURDF()
+            #print('\ntristan print statement\n',ratio_param['leg_mass'])
+            # leg_mass = np.tile(ratio_param['leg_mass'], 4) * self.robot.GetLegMassesFromURDF()
+            # GetLegMassesFromURDF is returning a 1rowx2column vector
+            # this will need to be changed asap
+            # leg_mass = ratio_param['leg_mass'] * self.robot.GetLegMassesFromURDF()
+            leg_mass = ratio_param['leg_mass'] * self.robot.GetLegMassesFromURDF()
         self.robot.SetLegMasses(leg_mass)
         info['dynamics']['leg_mass'] = leg_mass
 
         leg_inertia_ratio = ratio_param['leg_inertia']
         if 'leg_inertia' in self.dynamic_param.keys():
-            leg_inertia_base = self.dynamic_param['leg_inertia'] * 4
+            leg_inertia_base = self.dynamic_param['leg_inertia']
         else:
             leg_inertia_base = self.robot.GetLegInertiasFromURDF()
         leg_inertia = []
-        for i in range(12):
-            leg_inertia.append(leg_inertia_ratio[i%3]*leg_inertia_base[i])
+        print("\ntristan print\n",leg_inertia_base)
+        print("\ntristan print\n",leg_inertia_ratio)
+        print("\ntristan print\n",self.robot.GetLegMassesFromURDF())
+        for i in range(2):
+            leg_inertia.append(leg_inertia_ratio[i]*leg_inertia_base[i])
         self.robot.SetLegInertias(leg_inertia)
         info['dynamics']['leg_inertia'] = leg_inertia
 

@@ -221,9 +221,9 @@ foot_position_in_hip_frame_to_joint_angle(np.random.uniform(size=3), -1)
 
 
 def foot_positions_in_base_frame(foot_angles):
-  foot_angles = foot_angles.reshape((4, 3))
-  foot_positions = np.zeros((4, 3))
-  for i in range(4):
+  foot_angles = foot_angles.reshape((2, 3))
+  foot_positions = np.zeros((2, 3))
+  for i in range(2):
     foot_positions[i] = foot_position_in_hip_frame(foot_angles[i],
                                                    l_hip_sign=(-1)**(i + 1))
   return foot_positions + HIP_OFFSETS

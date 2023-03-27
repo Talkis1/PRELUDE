@@ -1070,6 +1070,7 @@ class Minitaur(object):
       ValueError: It is raised when the length of masses is not equal to number
         of links + motors.
     """
+    
     if len(leg_masses) != len(self._leg_link_ids) + len(self._motor_link_ids):
       raise ValueError("The number of values passed to SetLegMasses are "
                        "different than number of leg links and motors.")
