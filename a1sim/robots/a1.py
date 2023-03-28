@@ -99,8 +99,10 @@ _DEFAULT_HIP_POSITIONS = (
 )
 
 COM_OFFSET = -np.array([0.012731, 0.002186, 0.000515])
+# HIP_OFFSETS = np.array([[0.183, -0.047, 0.], [0.183, 0.047, 0.], changed so that HIP_OFFset would match dimensions in line 230
+#                         [-0.183, -0.047, 0.], [-0.183, 0.047, 0.]
+#                         ]) + COM_OFFSET
 HIP_OFFSETS = np.array([[0.183, -0.047, 0.], [0.183, 0.047, 0.],
-                        [-0.183, -0.047, 0.], [-0.183, 0.047, 0.]
                         ]) + COM_OFFSET
 
 ABDUCTION_P_GAIN = 80.0
@@ -221,7 +223,8 @@ foot_position_in_hip_frame_to_joint_angle(np.random.uniform(size=3), -1)
 
 
 def foot_positions_in_base_frame(foot_angles):
-  foot_angles = foot_angles.reshape((2, 3))
+  print('Max prints: a1 line 224',foot_angles)
+  foot_angles = foot_angles.reshape((11, 3)) #originally (2,3) probably should finish as (6,3) for both feet
   foot_positions = np.zeros((2, 3))
   for i in range(2):
     foot_positions[i] = foot_position_in_hip_frame(foot_angles[i],
